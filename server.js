@@ -1,6 +1,10 @@
 const net = require("net");
 
-const server = net.createServer();
+const express = require("express"); //
+const app = express(); //
+const PORT = process.env.PORT || 3000; //
+
+//const server = net.createServer();
 
 const clients = [];
 
@@ -40,6 +44,9 @@ server.on("connection", (socket) => {
   clients.push({ id: clientId.toString(), socket });
 }); // процесс connection будет запускаться каждый раз как кто то будет подключаться к нашему серверу
 
-server.listen(3008, "127.0.0.1", () => {
-  console.log("Opened server on", server.address());
+//server.listen(3008, "127.0.0.1", () => {
+//  console.log("Opened server on", server.address());
+//});
+const server = app.listen(PORT, () => {
+  console.log(`Opened server on ${PORT}`);
 });
