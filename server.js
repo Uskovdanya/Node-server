@@ -2,17 +2,14 @@ const net = require("net");
 
 const express = require("express"); //
 const app = express(); //
-const PORT = process.env.PORT || 3000; //
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
 
-const server = app.listen(PORT, () => {
-  console.log(`Opened server on ${PORT}`);
-});
-
-//const server = net.createServer();
+app.use(express.static("public"));
 
 const clients = [];
 
-server.on("connection", (socket) => {
+io.on("connection", (socket) => {
   console.log("A new connection to the server");
 
   const clientId = clients.length + 1;
@@ -51,3 +48,9 @@ server.on("connection", (socket) => {
 //server.listen(3008, "127.0.0.1", () => {
 //  console.log("Opened server on", server.address());
 //});
+
+const PORT = process.env.PORT || 3000; //
+
+server.listen(PORT, () => {
+  console.log(`Opened server on ${PORT}`);
+});
